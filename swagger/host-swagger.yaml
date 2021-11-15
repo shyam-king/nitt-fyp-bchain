@@ -1,0 +1,64 @@
+swagger: "2.0"
+info:
+  description: "This is the swagger description for root"
+  version: "1.0.0"
+  title: "Swagger Root Node"
+  contact:
+    email: "m.shyam.tnj@gmail.com"
+host: "root.local"
+basePath: "/api"
+tags:
+- name: "peer"
+  description: "Information about the peers and APIs for joining the chain"
+schemes:
+- "http"
+paths:
+  /peers:
+    get:
+      tags:
+      - "peer"
+      summary: "Get all the peers in the chain"
+      operationId: "getAllPeers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "default":
+          $ref: "#/responses/Error"
+        "200":
+          description: "List of peers"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Peer"
+responses:
+  Error:
+    description: "Error response"
+    schema: 
+      type: "object"
+      properties: 
+        statusCode: 
+          type: "integer"
+          description: "HTTP status code"
+        message: 
+          type: "string"
+          description: "error description"
+definitions:
+  Peer: 
+    type: "object"
+    required:
+      - alias 
+      - endPoint 
+      - publicKey
+    properties: 
+      alias: 
+        type: "string"
+        readOnly: true
+      endPoint:
+        type: "string"
+      publicKey:
+        type: "string"
+        format: "base64"
+        description: "The RSA public key encoded in base 64"
+  
